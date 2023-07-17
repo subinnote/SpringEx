@@ -13,16 +13,28 @@ public interface BoardMapper {
 	public List<BoardVO> getList();
 
 	public List<BoardVO> getListXml(Criteria cri);
-
+	
 	public int insert(BoardVO board);
-
+	
 	public int insertSelectKey(BoardVO board);
-
+	
 	public BoardVO getOne(int bno);
-
+	
 	public int delete(int bno);
-
+	
 	public int update(BoardVO board);
-
+	
 	public int getTotalCnt(Criteria cri);
 }
+
+
+
+
+
+
+
+
+
+
+
+

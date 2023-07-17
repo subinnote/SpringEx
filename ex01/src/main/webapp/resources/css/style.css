@@ -1,5 +1,8 @@
-@charset "UTF-8";
-
+/* Show it is fixed to the top */
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+}
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
@@ -7,6 +10,7 @@
   -moz-user-select: none;
   user-select: none;
 }
+
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
@@ -49,9 +53,3 @@
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
 }
-
-body {
- min-height: 75rem;
- padding-top: 4.5rem;
-}
-	    

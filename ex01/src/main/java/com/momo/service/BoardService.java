@@ -10,7 +10,7 @@ import com.momo.vo.Criteria;
 
 @Service
 public interface BoardService {
-	
+
 	public List<BoardVO> getListXml(Criteria cri, Model model);
 	
 	public int insert(BoardVO board);
@@ -23,6 +23,5 @@ public interface BoardService {
 	
 	public int update(BoardVO board);
 	
-	public int getTotalCnt();
-	
+	public int getTotalCnt(Criteria cri);
 }

@@ -1,10 +1,5 @@
 package com.momo.reply;
 
-import com.momo.mapper.ReplyMapper;
-import com.momo.vo.ReplyVO;
-
-import lombok.extern.log4j.Log4j;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -15,6 +10,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.momo.mapper.ReplyMapper;
+import com.momo.vo.Criteria;
+import com.momo.vo.ReplyVO;
+
+import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -27,8 +28,11 @@ public class ReplyMapperTest {
 	@Test
 	public void test() {
 		assertNotNull(mapper);
-		List<ReplyVO> list = mapper.getList(101);
-		log.info("================");
+		Criteria cri = new Criteria();
+		cri.setAmount(5);
+		cri.setPageNo(1);
+		List<ReplyVO> list = mapper.getList(83, cri);
+		log.info("======================");
 		log.info("list : " + list);
 	}
 	
@@ -36,8 +40,8 @@ public class ReplyMapperTest {
 	public void insertTest() {
 		ReplyVO vo = new ReplyVO();
 		
-		vo.setBno(101);
-		vo.setReply("댓글을 달아보아요");
+		vo.setBno(83);
+		vo.setReply("댓글을 달아 보아요");
 		vo.setReplyer("작성자");
 		
 		int res = mapper.insert(vo);
@@ -46,10 +50,40 @@ public class ReplyMapperTest {
 	}
 	
 	@Test
-	public void deleteTest() {
-		int rno = 6;
+	public void deleteTest() {	
+		int rno = 15;
 		int res = mapper.delete(rno);
 		
 		assertEquals(1, res);
 	}
+	
+	@Test
+	public void updateTest() {
+		ReplyVO vo = new ReplyVO();
+		
+		vo.setRno(40);
+		vo.setReply("댓글을 수정하기");
+		
+		int res = mapper.update(vo);
+		
+		assertEquals(res, 1);
+	}
+	
+	@Test
+	public void totalCnt() {
+		int res = mapper.totalCnt(83);
+		
+		System.out.println(res);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+

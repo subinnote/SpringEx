@@ -4,6 +4,7 @@
 <mapper namespace="com.momo.mapper.SampleMapper">
 
 	<select id="getTime2" resultType="String">
-		select sysdate || '[xml파일연동]'	from dual
+		select sysdate||'[xml파일연동]' from dual
 	</select>
+	
 </mapper>

@@ -16,20 +16,31 @@ public class MybatisTest {
 
 	@Autowired
 	SampleMapper sampleMapper;
-
+	
 	@Test
 	public void test() {
 		System.out.println(sampleMapper);
 		String time = sampleMapper.getTime();
-		System.out.println("========================" + time);
+		System.out.println("================" + time);
 		assertNotNull(time);
 	}
-
+	
 	@Test
 	public void test1() {
-		System.out.println("XML연동 테스트=======");
+		System.out.println("XML연동 테스트=========");
 		String time = sampleMapper.getTime2();
 		System.out.println(time);
 		assertNotNull(time);
 	}
+	
+	
 }
+
+
+
+
+
+
+
+
+

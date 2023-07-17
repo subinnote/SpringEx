@@ -1,7 +1,6 @@
 package com.momo.controller;
 
-
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +20,13 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/board/*")
 @Log4j
 public class BoardController {
-	
+
 	/**
 	 * /board/msg
 	 * WEB-INF/views/board/msg.jsp
 	 */
 	
+	// board/reply/test
 	@GetMapping("/reply/test")
 	public String test() {
 		return "/reply/test";
@@ -130,8 +130,19 @@ public class BoardController {
 	
 	@PostMapping("editAction")
 	public String editAction(BoardVO board
+								, Criteria cri
 								, RedirectAttributes rttr
 								, Model model) {
+		
+		//?pageNo=1
+		//request.getParm("pageNo");
+		//request.setAttr("")
+		// ${param.pageNo}
+		
+		//request.getAttr("")
+		//session.setAttr("")
+		//${pageNo}
+		
 		// 수정
 		int res = boardService.update(board);
 		
@@ -139,8 +150,12 @@ public class BoardController {
 			// redirect시 request 영역이 공유 되지 않으므로 
 			// RedirectAttributes를 이용 합니다. 
 			//model.addAttribute("msg", "수정 되었습니다.");
+			// ${msg}
 			rttr.addFlashAttribute("msg", "수정되었습니다.");
-			
+			//?~~
+			rttr.addAttribute("pageNo", cri.getPageNo());
+			rttr.addAttribute("searchField", cri.getSearchField());
+			rttr.addAttribute("searchWord", cri.getSearchWord());
 			// 상세페이지로 이동
 			return "redirect:/board/view?bno=" + board.getBno();			
 		} else {
@@ -165,3 +180,24 @@ public class BoardController {
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

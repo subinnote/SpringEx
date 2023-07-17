@@ -8,14 +8,16 @@
 </head>
 <body>
 <h2>파일 업로드</h2>
-	메시지 : ${message }
-	
-	<form action="/file/fileupload" method="post" enctype="multipart/form-data">
+	메세지 : ${message }
+	<form action="/file/fileupload" 
+			method="post" enctype="multipart/form-data">
+			
 		파일선택<br>
-	    <input type="file" name="files">
-	    <input type="file" name="files">
-	    <input type="file" name="files">
-	    <input type="submit">
+		<input type="file" name="files">
+		<input type="file" name="files">
+		<input type="file" name="files">
+		<input type="submit">
 	</form>
+
 </body>
 </html>

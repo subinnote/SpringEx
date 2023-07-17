@@ -1,18 +1,23 @@
 package com.momo.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.momo.service.MemberService;
 import com.momo.vo.Member;
 
 @Controller
-public class MemberController {
-
+public class MemberController extends CommonRestController{
+	
 	@Autowired
 	MemberService service;
 	
@@ -21,23 +26,79 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/login")
-	public String login(Member member) {
+	public String login() {
 		return "login";
 	}
-	
-
-	
-	@PostMapping("/loginAction")
-	public String loginAction(Member member, Model model) {
-		System.out.println("id : " +member.getId());
-		System.out.println("pw : " + member.getPw());
-		
-		service.login(member, model);
-		//model.addAttribute("message", member.getId() + "환영합니다.");
-		return "main";
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "logout";
 	}
 	
+	/*
+	 * json형식의 데이터를 주고 받고 싶어요 
+	 * 페이지를 갱신하지 않고 원하는 데이터만 요청
+	 * 
+	 * */
+	@PostMapping("/loginAction")
+	public @ResponseBody Map<String, Object> loginAction(
+										@RequestBody Member member
+										, Model model
+										, HttpSession session) {
+		System.out.println("id : " + member.getId());
+		System.out.println("pw : " + member.getPw());
+		
+		member = service.login(member);
+		
+		if(member != null) {
+			session.setAttribute("member", member);
+			session.setAttribute("userId", member.getId());
+			
+			return responseMap(REST_SUCCESS, "로그인 되었습니다.");
+		} else {
+			return responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
+		}
+		
+	}
+	
+	@PostMapping("/idCheck")
+	public @ResponseBody Map<String, Object> 
+						idCheck(@RequestBody Member member){
+
+		int res = service.idCheck(member);
+		
+		if(res == 0){
+			return responseMap(REST_SUCCESS, "사용가능한 아이디 입니다.");
+		} else {
+			return responseMap(REST_FAIL, "이미 사용중인 아이디 입니다.");
+		}		
+	}
+	
+	@PostMapping("/register")
+	public @ResponseBody Map<String, Object>
+						register(@RequestBody Member member){
+		try {
+		int res = service.insert(member);
+		return responseWriteMap(res);
+	}catch (Exception e) {
+		e.printStackTrace();
+		return responseMap(REST_FAIL, "등록 중 예외사항이 발생하였습니다.");
+	}
+	}
+		
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

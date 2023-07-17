@@ -23,17 +23,20 @@ public class HikariDataSourceTest {
 	
 	@Test
 	public void test() {
+		
 		try {
 			Connection conn = dataSource.getConnection();
 			
-			ResultSet rs = conn.createStatement().executeQuery("select sysdate from dual");
+			ResultSet rs = conn.createStatement()
+					.executeQuery("select sysdate from dual");
 			
 			rs.next();
 			System.out.println(rs.getString(1));
 			
-					
+			
 			assertNotNull(conn);
-		
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,3 +44,16 @@ public class HikariDataSourceTest {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
